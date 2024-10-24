@@ -5,6 +5,9 @@
 const { resolve, normalize } = require('path')
 const { readFileSync, writeFileSync } = require('fs')
 const pkg = require('../package.json')
+const { FileParser } = require('../src/file-parser');
+const { DependencyAnalyzer } = require('../src/dependency-analyzer');
+const { DataStorage } = require('../src/data-storage');
 
 const ROOT = resolve(__dirname, '..')
 const DIST = resolve(ROOT, 'dist')
@@ -14,6 +17,7 @@ main()
 
 function main() {
   writeDtsHeader()
+  handleFileDependencies()
 }
 
 function writeDtsHeader() {
@@ -63,4 +67,31 @@ function prependFileSync(path, data) {
     flag: 'w+',
     encoding: 'utf8',
   })
+}
+
+function handleFileDependencies() {
+  const fileParser = new FileParser();
+  const dependencyAnalyzer = new DependencyAnalyzer();
+  const dataStorage = new DataStorage();
+
+  const filePaths = getFilePaths(ROOT); // Implement this function to get all file paths in the project
+
+  filePaths.forEach(filePath => {
+    const fileContent = fileParser.parseFile(filePath);
+    const dependencies = fileParser.extractDependencies(fileContent);
+    dataStorage.addFileMetadata(filePath, fileContent);
+    dataStorage.addDependencyInfo(filePath, dependencies);
+  });
+
+  const projectDependencies = dependencyAnalyzer.analyzeProjectDependencies(filePaths);
+  const externalDependencies = dependencyAnalyzer.analyzeExternalDependencies(filePaths);
+
+  console.log('Project Dependencies:', projectDependencies);
+  console.log('External Dependencies:', externalDependencies);
+}
+
+function getFilePaths(dir) {
+  // Implement this function to get all file paths in the project
+  // You can use a library like 'glob' to get all file paths
+  return [];
 }
