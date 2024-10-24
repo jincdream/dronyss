@@ -48,7 +48,8 @@
     "release:npm": "npm publish dist",
     "release:preflight": "npm pack ./dist --dry-run",
     "size": "node scripts/file-size ./dist/bundles/index.umd.min.js ./dist/bundles/index.esm.min.js",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0",
+    "detect-updates": "node scripts/detect-updates.js"
   },
   "config": {
     "commitizen": {
