@@ -22,4 +22,36 @@ describe('DataStorage', () => {
     const retrievedDependency = dataStorage.getDependencyInfo(filePath);
     expect(retrievedDependency).toEqual(dependency);
   });
+
+  it('should correctly add file metadata', () => {
+    const filePath = 'test-file.ts';
+    const metadata = { content: 'test content' };
+    dataStorage.addFileMetadata(filePath, metadata);
+    const retrievedMetadata = dataStorage.getFileMetadata(filePath);
+    expect(retrievedMetadata).toEqual(metadata);
+  });
+
+  it('should correctly retrieve file metadata', () => {
+    const filePath = 'test-file.ts';
+    const metadata = { content: 'test content' };
+    dataStorage.addFileMetadata(filePath, metadata);
+    const retrievedMetadata = dataStorage.getFileMetadata(filePath);
+    expect(retrievedMetadata).toEqual(metadata);
+  });
+
+  it('should correctly add dependency info', () => {
+    const filePath = 'test-file.ts';
+    const dependency = { dependencies: ['some-module'] };
+    dataStorage.addDependencyInfo(filePath, dependency);
+    const retrievedDependency = dataStorage.getDependencyInfo(filePath);
+    expect(retrievedDependency).toEqual(dependency);
+  });
+
+  it('should correctly retrieve dependency info', () => {
+    const filePath = 'test-file.ts';
+    const dependency = { dependencies: ['some-module'] };
+    dataStorage.addDependencyInfo(filePath, dependency);
+    const retrievedDependency = dataStorage.getDependencyInfo(filePath);
+    expect(retrievedDependency).toEqual(dependency);
+  });
 });
